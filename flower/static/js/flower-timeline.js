@@ -62,6 +62,18 @@ var timeline = (function ($) {
     }, {});
   }
 
+  function url_prefix() {
+    var url_prefix = $('#url_prefix').val();
+    if (url_prefix) {
+      if (url_prefix.startsWith('/')) {
+        return url_prefix;
+      } else {
+        return '/' + url_prefix;
+      }
+    }
+    return '';
+  }
+
   function toDate(ts) {
     return new Date(ts);
   }
@@ -87,7 +99,7 @@ var timeline = (function ($) {
       params['taskname'] = taskValue;
     }
 
-    const response = await fetch('/timeline/api/tasks?' + $.param(params));
+    const response = await fetch(url_prefix() + '/timeline/api/tasks?' + $.param(params));
     if (!response.ok) {
       alert(`Could not retrieve tasks. Request status: ${response.status}`);
       return;
