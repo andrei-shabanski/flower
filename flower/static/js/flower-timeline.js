@@ -27,7 +27,9 @@ var timeline = (function ($) {
     .maxLineHeight(16)
     .onSegmentClick(event => {
       event.preventDefault();
-      alert(JSON.stringify(event.target.__data__.data.task, null, 4));
+      const taskJson = JSON.stringify(event.target.__data__.data.task, null, 4);
+      alert(taskJson);
+      console.log('Task: ' + taskJson);
     })
     .segmentTooltipContent(segment => {
       const task = segment.data.task;
@@ -127,7 +129,7 @@ var timeline = (function ($) {
         data: labels.map(label => {
           return {
             label: label.toString().padStart(2, '0'),  // 1 => "01"
-            data: choppedTasks[label].map(task => {
+            data: choppedTasks[label].reduce((result, task) => {
               let started = 0;
               let ended;
 
@@ -136,7 +138,8 @@ var timeline = (function ($) {
               } else if (task.eta) {
                 started = Date.parse(task.eta);
               } else {
-                alert(`Could not generate a segment from a task ${JSON.stringify(task)}`);
+                console.warn(`Could not generate a segment from a task ${JSON.stringify(task)}`);
+                return result;
               }
 
               if (task.runtime) {
@@ -145,12 +148,13 @@ var timeline = (function ($) {
                 ended = started + 1;
               }
 
-              return {
+              result.push({
                 timeRange: [toDate(started), toDate(ended)],
                 val: task.name,
                 task: task
-              };
-            })
+              });
+              return result;
+            }, [])
           };
         })
       });
