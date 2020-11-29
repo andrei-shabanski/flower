@@ -9,6 +9,11 @@ Celery Flower
 
 Flower is a web based tool for monitoring and administrating Celery clusters.
 
+NOTE
+----
+
+The patch adds an extra Timeline page for representing state of tasks over time.
+
 Features
 --------
 

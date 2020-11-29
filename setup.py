@@ -44,9 +44,9 @@ classifiers = [s.strip() for s in classes.split('\n') if s]
 
 
 setup(
-    name='flower',
+    name='flower-with-timeline',
     version=get_package_version(),
-    description='Celery Flower',
+    description='Celery Flower - with Timeline page',
     long_description=open('README.rst').read(),
     author='Mher Movsisyan',
     author_email='mher.movsisyan@gmail.com',

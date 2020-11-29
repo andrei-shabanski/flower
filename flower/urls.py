@@ -10,6 +10,7 @@ from .api import tasks
 from .api import workers
 from .views import auth
 from .views import monitor
+from .views import timeline
 from .views.broker import BrokerView
 from .views.workers import WorkerView
 from .views.tasks import TaskView, TasksView, TasksDataTable
@@ -76,6 +77,9 @@ handlers = [
     (r"/monitor/failed-tasks", monitor.FailedTaskMonitor),
     (r"/monitor/completion-time", monitor.TimeToCompletionMonitor),
     (r"/monitor/broker", monitor.BrokerMonitor),
+    # Timeline
+    url(r'/timeline', timeline.Timeline, name='timeline'),
+    (r'/timeline/api/tasks', timeline.TimelineListTasks),
     # Static
     (r"/static/(.*)", StaticFileHandler,
      {"path": settings['static_path']}),
